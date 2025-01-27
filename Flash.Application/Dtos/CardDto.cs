@@ -1,6 +1,6 @@
-﻿namespace Flash.Domain.Models.Card
+﻿namespace Flash.Application.Dtos
 {
-    public class Card
+    public class CardDto
     {
         public int Id { get; set; }
         public string Content { get; set; } = string.Empty;

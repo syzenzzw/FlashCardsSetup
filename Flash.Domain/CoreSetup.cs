@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Flash.Domain.Interfaces.ICardRepository;
+using Flash.Domain.Repositories.CardRepository;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Flash.Domain
+namespace Flash.Core.Domain
 {
-    internal class CoreSetup
+    public static class CoreSetup
     {
+        public static void Setup(IServiceCollection services)
+        {
+            services.AddScoped<ICardRepository, CardRepository>();
+        }
     }
 }
