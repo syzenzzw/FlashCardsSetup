@@ -1,0 +1,6 @@
+@Flash.WebApi_HostAddress = http://localhost:5133
+
+GET {{Flash.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
