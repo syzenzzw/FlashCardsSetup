@@ -5,11 +5,14 @@ namespace Flash.Application.Mappers.CardMappers
 {
     public static class MapToCreateCardDto
     {
-        public static Card MapToCreate(CreateCardDto cardDto) => new Card
+        public static Card MapToCreate(this CreateCardDto cardDto)
         {
-            Content = cardDto.Content,
-            Matter = cardDto.Matter,
-            Urgency = cardDto.Urgency
-        };
+            return new Card()
+            {
+                Content = cardDto.Content,
+                Matter = cardDto.Matter,
+                Urgency = cardDto.Urgency
+            };
+        }
     }
 }

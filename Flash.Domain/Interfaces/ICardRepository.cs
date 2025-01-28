@@ -6,11 +6,11 @@ namespace Flash.Domain.Interfaces.ICardRepository
 {
     public interface ICardRepository
     {
-        Task<List<Card>> GetAll();
-        Task<Card> GetById(int id);
-        Task<Card> CreateCard(Card cardModel);
-        Task<Card> Update(Card cardModel);
-        Task<Card> Delete(int id);
-        Task<Card> GetAllMatter(Card cardModel);
+        public Task<List<Card>> GetAll();
+        public Task<Card> GetById(int id);
+        public Task<Card> CreateCard(Card cardModel);
+        public Task<Card> Update(Card cardModel, int id);
+        public Task<Card> Delete(int id);
+        public Task<ICollection<Card>> GetAllMatter(Card cardModel);
     }
 }

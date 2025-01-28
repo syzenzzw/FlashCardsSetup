@@ -1,6 +1,4 @@
-﻿using Flash.Domain.Interfaces.ICardRepository;
-using Flash.Domain.Repositories.CardRepository;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Flash.Core.Domain
 {
@@ -8,7 +6,7 @@ namespace Flash.Core.Domain
     {
         public static void Setup(IServiceCollection services)
         {
-            services.AddScoped<ICardRepository, CardRepository>();
+           
         }
     }
 }
