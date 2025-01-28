@@ -10,6 +10,7 @@ namespace Flash.Domain.Interfaces.ICardRepository
         public Task<Card> GetById(int id);
         public Task<Card> CreateCard(Card cardModel);
         public Task<Card> Update(Card cardModel, int id);
+        public Task<Card> Revised(int id);
         public Task<Card> Delete(int id);
         public Task<ArraySegment<Card>> GetAllMatter();
     }

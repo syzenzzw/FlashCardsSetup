@@ -84,6 +84,17 @@ namespace Flash.WebApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = cardModel.Id }, cardModel.MapToDto());
         }
 
+        [HttpPut("{id:int}")]
+
+        public async Task<IActionResult> NowIsRevised([FromRoute] int id, RevisedDto revisedDto)
+        {
+            var revisedModel = revisedDto.ToMapRevised();
+            var revisedUpdate = await _cardRepo!.Revised(id);
+
+            return Ok(revisedUpdate);
+            
+        }
+
 
     }
 }

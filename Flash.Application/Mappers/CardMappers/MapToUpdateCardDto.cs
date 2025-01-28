@@ -7,8 +7,7 @@ namespace Flash.Application.Mappers.CardMappers
     {
         public static Card ToUpdateCard(this UpdateCardDto cardDto) => new Card
         {
-            Content = cardDto.Content,
-            Revised = cardDto.Revised
+            Content = cardDto.Content
         };
     }
 }

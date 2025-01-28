@@ -7,7 +7,5 @@ namespace Flash.Application.Dtos
         [Required]
         [MinLength(1)]
         public string Content { get; set; } = string.Empty;
-
-        public bool Revised { get; set; } = false;
     }
 }

@@ -60,6 +60,19 @@ namespace Flash.InfraStructure.Repositories.CardRepository
             return card!;
         }
 
+        public async Task<Card> Revised(int id)
+        {
+            var card = await _context.Cards!.FindAsync(id);
+
+            if (card == null) return null!;
+
+            card.Revised = true;
+
+            await _context.SaveChangesAsync();
+
+            return card;
+        }
+
         public async Task<Card> Update(Card cardModel, int id)
         {
             var card = await _context.Cards.FindAsync(id);
