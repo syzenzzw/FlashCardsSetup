@@ -95,6 +95,22 @@ namespace Flash.WebApi.Controllers
             
         }
 
+        [HttpPut("AtualizarConteudo")]
+        [Route("{id:int}")]
 
+        public async Task<IActionResult> UpdateContent([FromRoute] int id, [FromBody] UpdateCardDto cardDto)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+
+            var cardModel = cardDto.ToUpdateCard();
+
+            var newCard = await _cardRepo!.Update(cardModel, id);
+
+            if (newCard == null) return NotFound();
+
+            return CreatedAtAction(nameof(GetById), new { id = cardModel.Id }, cardModel.MapToDto());
+        }
     }
 }

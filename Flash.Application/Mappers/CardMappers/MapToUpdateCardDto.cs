@@ -5,9 +5,13 @@ namespace Flash.Application.Mappers.CardMappers
 {
     public static class MapToUpdateCardDto
     {
-        public static Card ToUpdateCard(this UpdateCardDto cardDto) => new Card
+        public static Card ToUpdateCard(this UpdateCardDto cardDto)
         {
-            Content = cardDto.Content
-        };
+            return new Card
+            {
+                Content = cardDto.Content,
+            };
+        }
+        
     }
 }
