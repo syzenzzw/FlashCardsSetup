@@ -38,10 +38,17 @@ namespace Flash.InfraStructure.Repositories.CardRepository
             return cards;
         }
 
-        public async Task<ICollection<Card>> GetAllMatter(Card cardModel)
+        public async Task<ArraySegment<Card>> GetAllMatter()
         {
-           var cardMatter = cardModel.Matter.ToString();
-            return await _context.Cards.Where(card => card.Matter.ToString() == cardMatter).ToListAsync();
+            var card = await _context.Cards.ToArrayAsync();
+
+            if (card == null)
+            {
+                return null!;
+            }
+
+
+            return card;
         }
 
         public async Task<Card> GetById(int id)

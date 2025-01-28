@@ -11,6 +11,6 @@ namespace Flash.Domain.Interfaces.ICardRepository
         public Task<Card> CreateCard(Card cardModel);
         public Task<Card> Update(Card cardModel, int id);
         public Task<Card> Delete(int id);
-        public Task<ICollection<Card>> GetAllMatter(Card cardModel);
+        public Task<ArraySegment<Card>> GetAllMatter();
     }
 }
