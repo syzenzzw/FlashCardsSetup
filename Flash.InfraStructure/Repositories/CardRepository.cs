@@ -1,4 +1,5 @@
-﻿using Flash.Domain.Interfaces.ICardRepository;
+﻿using Flash.Domain.Helpers;
+using Flash.Domain.Interfaces.ICardRepository;
 using Flash.Domain.Models.Card;
 using Flash.InfraStructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -32,10 +33,18 @@ namespace Flash.InfraStructure.Repositories.CardRepository
             return card!;
         }
 
-        public async Task<List<Card>> GetAll()
+        public async Task<QueryHelpers<Card>> GetAll(int pageIndex, int pageSize)
         {
-            var cards = await _context.Cards.ToListAsync(); 
-            return cards;
+            var cards = await _context.Cards
+                .OrderBy(b => b.Id)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+                
+            var count = await _context.Cards.CountAsync();
+            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
+
+            return new QueryHelpers<Card>(cards, pageIndex, totalPages);
         }
 
         public async Task<ArraySegment<Card>> GetAllMatter()

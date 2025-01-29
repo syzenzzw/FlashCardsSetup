@@ -3,6 +3,7 @@ using Flash.InfraStructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Flash.Application.Mappers.CardMappers;
 using Flash.Domain.Interfaces.ICardRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Flash.WebApi.Controllers
 {
@@ -21,11 +22,10 @@ namespace Flash.WebApi.Controllers
 
         [HttpGet("GetAllCards")]
             
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int pageIndex = 1, int pageSize = 20)
         {
-            var card = await _cardRepo!.GetAll();
-            var cardDto = card.Select(s => s.MapToDto());
-            
+            var card = await _cardRepo!.GetAll(pageIndex, pageSize);
+  
             if(card == null) return NotFound();
 
             return Ok(card);
@@ -95,9 +95,8 @@ namespace Flash.WebApi.Controllers
             
         }
 
-        [HttpPut("AtualizarConteudo")]
-        [Route("{id:int}")]
-
+        [HttpPut("AtualizarConteudo{id:int}")]
+        
         public async Task<IActionResult> UpdateContent([FromRoute] int id, [FromBody] UpdateCardDto cardDto)
         {
             if(!ModelState.IsValid)
@@ -111,6 +110,17 @@ namespace Flash.WebApi.Controllers
             if (newCard == null) return NotFound();
 
             return CreatedAtAction(nameof(GetById), new { id = cardModel.Id }, cardModel.MapToDto());
+        }
+
+        [HttpDelete("{id:int}")]
+
+        public async Task<IActionResult> DeleteCard([FromRoute] int id)
+        {
+            var cardDelete =  await _cardRepo!.Delete(id);    
+            
+            if (cardDelete == null) return NotFound();
+
+            return Ok(cardDelete);
         }
     }
 }
