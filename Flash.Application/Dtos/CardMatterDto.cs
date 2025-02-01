@@ -2,6 +2,7 @@
 {
     public class CardMatterDto
     {
-        public Array? Matter { get; set; }
+        public int Id { get; set; }
+        public string? Matter { get; set; }
     }
 }

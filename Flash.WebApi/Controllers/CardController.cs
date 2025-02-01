@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Flash.Application.Mappers.CardMappers;
 using Flash.Domain.Interfaces.ICardRepository;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Flash.WebApi.Controllers
 {
@@ -36,37 +37,36 @@ namespace Flash.WebApi.Controllers
         public async Task<IActionResult> GetAllMatters()
         {
             var matter = await _cardRepo!.GetAllMatter();
-            var matterDto = matter.Select(s => s.ToMapMatter());
-            int count = 0;
+            var matterDto = matter.Select(s => s.ToMapMatter()).ToList();
+            var distinctMatter = matterDto
+       .DistinctBy(m => m.Matter)
+       .ToList();
 
-            foreach (var item in matterDto)
-            {
 
-                if (item == item)
-                {
-                    count++;
-                }
-            }
-
-            var result = new
-            {
-                Matters = matterDto,
-                Count = count
-            };
-
-            return Ok(result);
+            return Ok(distinctMatter);
         }
 
 
-        [HttpGet("{id:int}")]
+        [HttpGet("PegarPelaId{id:int}")]
         
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var card = await _cardRepo!.GetById(id);
+            var cardDto = card.MapToDto();
 
             if (card == null) return NotFound();
 
-            return Ok(card);
+            if (cardDto.Revised == "True")
+            {
+                cardDto.Revised = "Sim";
+            }
+
+            else
+            {
+                cardDto.Revised = "Não";
+            }
+
+            return Ok(cardDto);
         }
 
 
@@ -84,7 +84,7 @@ namespace Flash.WebApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = cardModel.Id }, cardModel.MapToDto());
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("ChangeRevised{id:int}")]
 
         public async Task<IActionResult> NowIsRevised([FromRoute] int id, RevisedDto revisedDto)
         {

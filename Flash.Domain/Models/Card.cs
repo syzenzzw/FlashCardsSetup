@@ -9,5 +9,14 @@
         public string Urgency { get; set; } = string.Empty;
         public bool Revised { get; set; } = false;
 
+        public string FormattedCreatedOn
+        {
+            get
+            {
+                return CreatedOn.ToString("yyyy-MM-dd"); 
+            }
+
+        }
     }
 }
+

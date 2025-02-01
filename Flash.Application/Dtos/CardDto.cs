@@ -22,7 +22,6 @@ namespace Flash.Application.Dtos
         public string Urgency { get; set; } = string.Empty;
 
         [Required]
-        public bool Revised { get; set; } = false;
-
+        public string Revised { get; set; }
     }
 }

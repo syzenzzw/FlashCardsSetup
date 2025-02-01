@@ -37,6 +37,9 @@ namespace Flash.InfraStructure.Repositories.CardRepository
         {
             var cards = await _context.Cards
                 .OrderBy(b => b.Id)
+                //Ao pular uma página ele vai contar quantos objetos ele passou
+                //até estar ali
+                //Ex: pag 1; (1 - 1 = 0) * 20 == 0; isso significa que ele vai ter que pular 20 objetos para estar ali
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -47,9 +50,9 @@ namespace Flash.InfraStructure.Repositories.CardRepository
             return new QueryHelpers<Card>(cards, pageIndex, totalPages);
         }
 
-        public async Task<ArraySegment<Card>> GetAllMatter()
+        public async Task<List<Card>> GetAllMatter()
         {
-            var card = await _context.Cards.ToArrayAsync();
+            var card = await _context.Cards.ToListAsync();
 
             if (card == null)
             {

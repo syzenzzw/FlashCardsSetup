@@ -19,7 +19,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
 });
 
-
 builder.Services.AddScoped<ICardRepository, CardRepository>();
 
 var app = builder.Build();
@@ -32,6 +31,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.UseCors(cors =>
+{
+    cors.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials().WithOrigins("http://localhost:5173");
+});
+
 app.MapControllers();
+
+
 
 app.Run();

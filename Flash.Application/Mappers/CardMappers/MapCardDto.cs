@@ -14,8 +14,9 @@ namespace Flash.Application.Mappers.CardMappers
                 CreatedOn = card.CreatedOn.ToString(),
                 Matter = card.Matter,
                 Urgency = card.Urgency,
-                Revised = card.Revised
+                Revised = card.Revised.ToString(),
             };
+
         }
     }
 }
