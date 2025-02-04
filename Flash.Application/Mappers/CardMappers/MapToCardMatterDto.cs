@@ -9,8 +9,8 @@ namespace Flash.Application.Mappers.CardMappers
         {
             return new CardMatterDto
             {
-                Id = cardModel.Id,
                 Matter = cardModel.Matter,
+                Id = cardModel.Id,
             };
         }
     }

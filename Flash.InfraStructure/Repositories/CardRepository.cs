@@ -59,7 +59,6 @@ namespace Flash.InfraStructure.Repositories.CardRepository
                 return null!;
             }
 
-
             return card;
         }
 

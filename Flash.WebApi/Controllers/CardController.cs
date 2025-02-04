@@ -26,7 +26,7 @@ namespace Flash.WebApi.Controllers
         public async Task<IActionResult> GetAll(int pageIndex = 1, int pageSize = 20)
         {
             var card = await _cardRepo!.GetAll(pageIndex, pageSize);
-  
+
             if(card == null) return NotFound();
 
             return Ok(card);
@@ -38,10 +38,10 @@ namespace Flash.WebApi.Controllers
         {
             var matter = await _cardRepo!.GetAllMatter();
             var matterDto = matter.Select(s => s.ToMapMatter()).ToList();
-            var distinctMatter = matterDto
-       .DistinctBy(m => m.Matter)
-       .ToList();
-
+            var distinctMatter = 
+            matterDto
+            .DistinctBy(m => m.Matter)
+            .ToList();
 
             return Ok(distinctMatter);
         }
@@ -75,11 +75,13 @@ namespace Flash.WebApi.Controllers
         public async Task<IActionResult> CreateCard([FromBody] CreateCardDto cardDto)
         {
             if(!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest("erro no model state");
 
             var cardModel = cardDto.MapToCreate();
 
+
             var response = await _cardRepo!.CreateCard(cardModel);
+
 
             return CreatedAtAction(nameof(GetById), new { id = cardModel.Id }, cardModel.MapToDto());
         }

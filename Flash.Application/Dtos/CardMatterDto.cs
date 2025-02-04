@@ -2,7 +2,7 @@
 {
     public class CardMatterDto
     {
-        public int Id { get; set; }
         public string? Matter { get; set; }
+        public int Id { get; set; }
     }
 }
