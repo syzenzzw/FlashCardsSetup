@@ -3,8 +3,7 @@ using Flash.InfraStructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Flash.Application.Mappers.CardMappers;
 using Flash.Domain.Interfaces.ICardRepository;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using Flash.WebApi.ModelViews;
 
 namespace Flash.WebApi.Controllers
 {
@@ -25,11 +24,12 @@ namespace Flash.WebApi.Controllers
             
         public async Task<IActionResult> GetAll(int pageIndex = 1, int pageSize = 20)
         {
-            var card = await _cardRepo!.GetAll(pageIndex, pageSize);
+            var cardModel = await _cardRepo!.GetAll(pageIndex, pageSize);
+            var cardDto = cardModel.Select(m => m.MapToDto()).ToList();
+            List<CardDto> revisedCardDtos = new List<CardDto>(cardDto);
 
-            if(card == null) return NotFound();
 
-            return Ok(card);
+            return Ok(cardDto);
         }
 
         [HttpGet("GetAllMatters")]
@@ -58,12 +58,12 @@ namespace Flash.WebApi.Controllers
 
             if (cardDto.Revised == "True")
             {
-                cardDto.Revised = "Sim";
+                cardDto.Revised = "Yes";
             }
 
             else
             {
-                cardDto.Revised = "Não";
+                cardDto.Revised = "No";
             }
 
             return Ok(cardDto);
@@ -111,7 +111,7 @@ namespace Flash.WebApi.Controllers
 
             if (newCard == null) return NotFound();
 
-            return CreatedAtAction(nameof(GetById), new { id = cardModel.Id }, cardModel.MapToDto());
+            return Ok(new ResponseUpdateModelView("Flash-Card update with sucess! "));
         }
 
         [HttpDelete("{id:int}")]

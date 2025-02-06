@@ -33,7 +33,7 @@ namespace Flash.InfraStructure.Repositories.CardRepository
             return card!;
         }
 
-        public async Task<QueryHelpers<Card>> GetAll(int pageIndex, int pageSize)
+        public async Task<List<Card>> GetAll(int pageIndex, int pageSize)
         {
             var cards = await _context.Cards
                 .OrderBy(b => b.Id)
@@ -44,10 +44,7 @@ namespace Flash.InfraStructure.Repositories.CardRepository
                 .Take(pageSize)
                 .ToListAsync();
                 
-            var count = await _context.Cards.CountAsync();
-            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
-
-            return new QueryHelpers<Card>(cards, pageIndex, totalPages);
+            return cards;
         }
 
         public async Task<List<Card>> GetAllMatter()
